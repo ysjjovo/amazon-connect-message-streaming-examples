@@ -3,17 +3,17 @@ funDir = ${baseDir}/src/lambda
 inboundFun=ChatMessageStreamingExamp-inboundMessageFunctionB5-njXNL94bdNWX
 outboundfun=ChatMessageStreamingExamp-outboundMessageFunction0-1PVFs8GGa3pp
 depDir = ${baseDir}/src/nodejs
+utilDir=${depDir}/node_modules/common-util
 
 define makeLayer
+	mkdir -p ${utilDir};\
 	cd ${depDir};\
 	npm install;\
-	utilDir=${depDir}/node_modules/common-util;\
-	mkdir -p $$utilDir;\
 	cp -a index.js lib $$utilDir;\
 	cd ..;\
 	zip -rq nodejs.zip nodejs;\
 	aws lambda publish-layer-version --layer-name ${1} --zip-file fileb://nodejs.zip --compatible-runtimes nodejs14.x > /dev/null;\
-	rm -f nodejs.zip
+	rm -f nodejs.zip ${depDir}
 endef
 define zipCode
 	name=$(1);\

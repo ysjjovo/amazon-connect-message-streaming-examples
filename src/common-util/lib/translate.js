@@ -1,6 +1,6 @@
 const AWS = require("aws-sdk")
-// AWS.config.region = process.env.AWS_REGION
-AWS.config.region = 'us-east-1'
+AWS.config.region = process.env.AWS_REGION
+// AWS.config.region = 'us-east-1'
 module.exports = async (content, s, t) => {
     const translate = new AWS.Translate()
     let params = {
