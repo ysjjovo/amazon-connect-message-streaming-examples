@@ -1,0 +1,10 @@
+{
+    "Records":[
+        {
+            "EventSource": "aws:sns"
+            ,"Sns":{
+                "Message":"{\"originationNumber\": \"+19494095417\", \"messageBody\":\"hi\"}"
+            }
+        }
+    ]
+}

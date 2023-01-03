@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: MIT-0
 
 const AWS = require('aws-sdk');
-const { log } = require('common-util');
+const { log,translate } = require('common-util');
 
 const pinpoint = new AWS.Pinpoint();
 
@@ -18,6 +18,9 @@ const handler = async (phoneNumber, message) => {
 };
 
 const sendMessage = async (phoneNumber, message) => {
+  msg = message.Content
+  toMsg = await translate(msg, 'en', 'zh')
+  messageToSend = toMsg +"\n--原始文本:\n" +　msg;
   const params = {
     ApplicationId: PINPOINT_APPLICATION_ID,
     MessageRequest: {
@@ -28,7 +31,7 @@ const sendMessage = async (phoneNumber, message) => {
       },
       MessageConfiguration: {
         SMSMessage: {
-          Body: message.Content,
+          Body: toMsg,
           OriginationNumber: SMS_NUMBER,
           MessageType: "TRANSACTIONAL"
         },

@@ -229,6 +229,13 @@ export class ChatMessageStreamingExamplesStack extends cdk.Stack {
         effect: iam.Effect.ALLOW,
       })
     );
+    inboundMessageFunction.addToRolePolicy(
+      new iam.PolicyStatement({
+        actions: ['translate:TranslateText'],
+        resources: ['*'],
+        effect: iam.Effect.ALLOW,
+      })
+    );
 
     inboundMessageFunction.addToRolePolicy(
       new iam.PolicyStatement({
@@ -297,6 +304,13 @@ export class ChatMessageStreamingExamplesStack extends cdk.Stack {
           chatContactDdbTable.tableArn,
           `${chatContactDdbTable.tableArn}/index/${vendorIdChannelIndexName}`,
         ],
+        effect: iam.Effect.ALLOW,
+      })
+    );
+    outboundMessageFunction.addToRolePolicy(
+      new iam.PolicyStatement({
+        actions: ['translate:TranslateText'],
+        resources: ['*'],
         effect: iam.Effect.ALLOW,
       })
     );

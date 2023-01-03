@@ -1,5 +1,5 @@
 {
-  "name": "inboundmessagehandler",
+  "name": "common-util",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -12,7 +12,6 @@
   "author": "",
   "license": "MIT-0",
   "dependencies": {
-    "common-util": "file:./../../common-util",
     "aws-sdk": "^2.1020.0"
   }
 }

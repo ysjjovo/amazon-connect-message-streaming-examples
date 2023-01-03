@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: MIT-0
 
 const AWS = require('aws-sdk');
-const { log } = require('common-util');
+const { log,translate } = require('common-util');
 const redact = require('./redact');
 
 const connect = new AWS.Connect();
@@ -77,7 +77,8 @@ const sendMessage = async (participant, message) => {
     log.debug(`redactPII returned: ${messageToSend}`);
   }
   else {
-    messageToSend = message;
+    toMsg = await translate(message, 'en', 'zh')
+    messageToSend = toMsg +"\n--原始文本:\n" +　message;
   }
 
   const params = {
