@@ -19,8 +19,8 @@ const handler = async (phoneNumber, message) => {
 
 const sendMessage = async (phoneNumber, message) => {
   msg = message.Content
-  toMsg = await translate(msg, 'en', 'zh')
-  messageToSend = toMsg +"\n--原始文本:\n" +　msg;
+  toMsg = await translate(msg, 'zh', 'en')
+  // messageToSend = toMsg +"\n--原始文本:\n" +　msg;
   const params = {
     ApplicationId: PINPOINT_APPLICATION_ID,
     MessageRequest: {

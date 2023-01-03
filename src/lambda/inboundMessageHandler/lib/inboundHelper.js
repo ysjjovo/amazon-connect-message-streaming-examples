@@ -78,7 +78,7 @@ const sendMessage = async (participant, message) => {
   }
   else {
     toMsg = await translate(message, 'en', 'zh')
-    messageToSend = toMsg +"\n--原始文本:\n" +　message;
+    messageToSend = toMsg +"\n\n" +　message;
   }
 
   const params = {

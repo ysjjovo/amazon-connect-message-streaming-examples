@@ -3,7 +3,7 @@
         {
             "EventSource": "aws:sns"
             ,"Sns":{
-                "Message":"{\"originationNumber\": \"+19494095417\", \"messageBody\":\"hi\"}"
+                "Message":"{\"originationNumber\": \"+19494095417\", \"messageBody\":\"is this day incorporated under the companies Act 2006 as a private company,that the company is limited by shares,and the situation of its registered office is in England and Wales.\"}"
             }
         }
     ]

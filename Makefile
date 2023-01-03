@@ -1,6 +1,9 @@
 baseDir=$(shell pwd)
 funDir = ${baseDir}/src/lambda
+inboundFun=ChatMessageStreamingExamp-inboundMessageFunctionB5-njXNL94bdNWX
+outboundfun=ChatMessageStreamingExamp-outboundMessageFunction0-1PVFs8GGa3pp
 depDir = ${baseDir}/src/nodejs
+
 define makeLayer
 	cd ${depDir};\
 	npm install;\
@@ -19,11 +22,26 @@ define zipCode
 	aws lambda update-function-code --function-name $(2) --zip-file fileb://code.zip > /dev/null;\
 	rm -f code.zip
 endef
+
+deps:
+	npm -g install typescript
+	npm install -g aws-cdk
+	cdk bootstrap
+	npm install
+	cd src/common-util
+	npm install
+
+deploy:
+	cdk deploy \
+--context amazonConnectArn=\
+--context contactFlowId= \
+--context smsNumber=\
+--context pinpointAppId=
 PHONY: smsConnectDeps
 smsConnectDeps:
 	$(call makeLayer,smsConnectDeps)
 inboudCode:
-	$(call zipCode,inboundMessageHandler,ChatMessageStreamingExamp-inboundMessageFunctionB5-njXNL94bdNWX)
+	$(call zipCode,inboundMessageHandler,${inboundFun})
 	
 outboudCode:
-	$(call zipCode,outboundMessageHandler,ChatMessageStreamingExamp-outboundMessageFunction0-1PVFs8GGa3pp)
+	$(call zipCode,outboundMessageHandler,${outboundfun})

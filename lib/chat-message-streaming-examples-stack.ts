@@ -152,6 +152,13 @@ export class ChatMessageStreamingExamplesStack extends cdk.Stack {
       digitalOutboundMsgStreamingTopic.addToResourcePolicy(digitalOutboundMsgStreamingTopicStatement);
     }
     
+    const layer = new lambda.LayerVersion(this, 'smsConnectDeps', {
+      code: lambda.Code.fromAsset(path.join(__dirname, '../src/common-util')),
+      compatibleRuntimes: [lambda.Runtime.NODEJS_14_X],
+      license: 'Apache-2.0',
+      description: 'A layer for inbound and outbound function',
+    });
+    
     
     // Inbound Lambda function
     const inboundMessageFunction = new lambda.Function(
@@ -163,6 +170,7 @@ export class ChatMessageStreamingExamplesStack extends cdk.Stack {
         code: lambda.Code.fromAsset(
           path.resolve(__dirname, '../src/lambda/inboundMessageHandler')
         ),
+        layers: [layer],
         timeout: Duration.seconds(120),
         memorySize: 512,
         environment: {
@@ -265,6 +273,7 @@ export class ChatMessageStreamingExamplesStack extends cdk.Stack {
         code: lambda.Code.fromAsset(
           path.resolve(__dirname, '../src/lambda/outboundMessageHandler')
         ),
+        layers: [layer],
         timeout: Duration.seconds(60),
         memorySize: 512,
         environment: {
@@ -331,6 +340,7 @@ export class ChatMessageStreamingExamplesStack extends cdk.Stack {
           code: lambda.Code.fromAsset(
             path.resolve(__dirname, '../src/lambda/digitalChannelHealthCheck')
           ),
+          layers: [layer],
           environment: {
             DEBUG_LOG: debugLog.valueAsString,
             FB_SECRET: fbSecretArn,
