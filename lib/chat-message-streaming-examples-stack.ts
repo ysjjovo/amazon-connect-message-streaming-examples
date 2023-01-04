@@ -153,7 +153,7 @@ export class ChatMessageStreamingExamplesStack extends cdk.Stack {
     }
     
     const layer = new lambda.LayerVersion(this, 'smsConnectDeps', {
-      code: lambda.Code.fromAsset(path.join(__dirname, '../src/common-util')),
+      code: lambda.Code.fromAsset(path.join(__dirname, '../src/layer/smsConnectDeps')),
       compatibleRuntimes: [lambda.Runtime.NODEJS_14_X],
       license: 'Apache-2.0',
       description: 'A layer for inbound and outbound function',

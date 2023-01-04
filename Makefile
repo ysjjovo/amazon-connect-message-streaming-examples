@@ -1,45 +1,42 @@
-baseDir=$(shell pwd)
-funDir = ${baseDir}/src/lambda
-inboundFun=ChatMessageStreamingExamp-inboundMessageFunctionB5-njXNL94bdNWX
-outboundfun=ChatMessageStreamingExamp-outboundMessageFunction0-1PVFs8GGa3pp
-depDir = ${baseDir}/src/nodejs
-utilDir=${depDir}/node_modules/common-util
+layerName=
+inboundFun=
+outboundfun=
+region=ap-northeast-1
 
+baseDir=$(shell pwd)
 define makeLayer
-	mkdir -p ${utilDir};\
-	cd ${depDir};\
+	layerDir=${baseDir}/src/layer/smsConnectDeps/nodejs;\
+	cd $$layerDir;\
 	npm install;\
-	cp -a index.js lib $$utilDir;\
-	cd ..;\
-	zip -rq nodejs.zip nodejs;\
-	aws lambda publish-layer-version --layer-name ${1} --zip-file fileb://nodejs.zip --compatible-runtimes nodejs14.x > /dev/null;\
-	rm -f nodejs.zip ${depDir}
+	utilDir=node_modules/common-util;\
+	mkdir -p $$utilDir;\
+	cp -a index.js lib $$utilDir;
 endef
+
 define zipCode
-	name=$(1);\
-	cd ${funDir}/$${name};\
+	cd ${baseDir}/src/lambda/${1};\
 	zip -qr code.zip *;\
 	aws lambda update-function-code --function-name $(2) --zip-file fileb://code.zip > /dev/null;\
 	rm -f code.zip
 endef
 
 deps:
-	npm -g install typescript
-	npm install -g aws-cdk
-	cdk bootstrap
-	npm install
-	cd src/common-util
-	npm install
+	# npm -g install typescript
+	# npm install -g aws-cdk
+	# cdk bootstrap aws://$(shell aws sts get-caller-identity --query "Account" --output text)/${region}
+	# npm install;
+	$(call makeLayer)
 
 deploy:
-	cdk deploy \
---context amazonConnectArn=\
---context contactFlowId= \
---context smsNumber=\
---context pinpointAppId=
-PHONY: smsConnectDeps
+	export account=$(shell aws sts get-caller-identity --query "Account" --output text);\
+	export region=${region};\
+	cdk deploy --app 'npx ts-node --prefer-ts-exts bin/chat-message-streaming-examples.ts'
 smsConnectDeps:
-	$(call makeLayer,smsConnectDeps)
+	$(call makeLayer)
+	cd src/layer/${layerName};\
+	zip -rq nodejs.zip nodejs;\
+	aws lambda publish-layer-version --layer-name ${layerName} --zip-file fileb://nodejs.zip --compatible-runtimes nodejs14.x > /dev/null;\
+	rm -f nodejs.zip
 inboudCode:
 	$(call zipCode,inboundMessageHandler,${inboundFun})
 	
