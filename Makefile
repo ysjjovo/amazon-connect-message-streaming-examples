@@ -1,7 +1,7 @@
 layerName=
 inboundFun=
 outboundfun=
-region=ap-northeast-1
+region=
 
 baseDir=$(shell pwd)
 define makeLayer
