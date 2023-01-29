@@ -21,10 +21,10 @@ define zipCode
 endef
 
 deps:
-	# npm -g install typescript
-	# npm install -g aws-cdk
-	# cdk bootstrap aws://$(shell aws sts get-caller-identity --query "Account" --output text)/${region}
-	# npm install;
+	npm -g install typescript
+	npm install -g aws-cdk
+	cdk bootstrap aws://$(shell aws sts get-caller-identity --query "Account" --output text)/${region}
+	npm install;
 	$(call makeLayer)
 
 deploy:
