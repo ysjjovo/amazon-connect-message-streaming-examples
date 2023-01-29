@@ -1,6 +1,6 @@
 {
-    "amazonConnectArn":"",
-    "contactFlowId":"",
-    "smsNumber":"",
-    "pinpointAppId":""
+    "amazonConnectArn":"arn:aws:connect:us-east-1:052499878114:instance/8dae1f6f-b1f4-4741-97f4-a67d7ed772ec",
+    "contactFlowId":"d65a0c21-6cb7-414b-91b8-1c54c23af818",
+    "smsNumber":"+18557695687",
+    "pinpointAppId":"afe2a06ff2ed4524a9af105f8af44a41"
 }

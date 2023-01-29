@@ -1,0 +1,15 @@
+{
+  "name": "vonage-callback",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT-0",
+  "dependencies": {
+    "js-sha256": "^0.9.0",
+    "jsonwebtoken": "^9.0.0"
+  }
+}
