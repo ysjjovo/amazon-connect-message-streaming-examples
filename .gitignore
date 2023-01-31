@@ -9,3 +9,4 @@ cdk.out
 
 .DS_Store
 packaged.yml
+src/layer/sinchSend

@@ -45,6 +45,13 @@ vonageDeps:
 	zip -rq nodejs.zip nodejs;\
 	aws lambda publish-layer-version --layer-name vonageDeps --zip-file fileb://nodejs.zip --compatible-runtimes nodejs18.x > /dev/null;\
 	rm -f nodejs.zip
+sinchSend:
+	cd src/layer/sinchSend/python;\
+	rm -rf *dist-info __pycache__;\
+	cd ..;\
+	zip -rq python.zip python;\
+	aws lambda publish-layer-version --layer-name sinchSend --zip-file fileb://python.zip --compatible-runtimes python3.8 > /dev/null;\
+	rm -f python.zip
 inboudCode:
 	$(call zipCode,inboundMessageHandler,${inboundFun})
 	
